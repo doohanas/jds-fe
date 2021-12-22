@@ -339,17 +339,17 @@ export default {
       }
     },
     getRegency() {
-      this.axios.get(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.provinceId}.json`)
+      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.provinceId}.json`)
         .then(regencies => this.regencies = regencies.data)
         .catch(() => alert('Pilih Provinsi'))
     },
     getDistrict() {
-      this.axios.get(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.regencieId}.json`)
+      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.regencieId}.json`)
         .then(districts => this.districts = districts.data)
         .catch(() => alert('Pilih Kota'))
     },
     getVillage() {
-      this.axios.get(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${this.districtId}.json`)
+      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${this.districtId}.json`)
         .then(villages => this.villages = villages.data)
         .catch(() => alert('Pilih Kecamatan'))
     },
@@ -395,7 +395,7 @@ export default {
     },
   },
   created() { 
-    this.axios.get(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+    this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
       .then(provinces => this.provinces = provinces.data)
       .catch(error => console.log(error))
   }
