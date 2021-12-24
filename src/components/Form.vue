@@ -251,11 +251,11 @@ export default {
     return {
       rules: {
         required: value => !!value || 'Required',
-        isNikValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor NIK terdiri dari 16 angka',
-        isKkValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor KK terdiri dari 16 angka',
+        isNikValidated: value => (value && value.length >= 16 && value.length <= 16) || 'Nomor NIK terdiri dari 16 angka',
+        isKkValidated: value => (value && value.length >= 16 && value.length <= 16) || 'Nomor KK terdiri dari 16 angka',
         isAgeValidated: value => value >= 25 || 'Minimal usia 25 tahun',
         isFileValidated: value => !value || value.size < 2000000 || 'Maksimal ukuran file 2 MB dan format file wajib png, jpeg, jpg, atau bmp',
-        addressValidation: value => value.length <= 255 || "Maksimal 255 Karakter"
+        addressValidation: value => (value && value.length <= 255) || "Maksimal 255 Karakter"
       },
       name: '',
       nik: null,
@@ -389,6 +389,7 @@ export default {
       setTimeout(() => {
         if(Math.random() < 0.8) {
           this.formIsValidated()
+          this.$refs.form.reset()
         } else {
           alert('Coba kembali')
         }
