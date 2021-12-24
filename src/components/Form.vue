@@ -247,51 +247,52 @@
 <script>
 export default {
   name: "Form",
-  data: () => ({
-    rules: {
-      required: value => !!value || 'Required',
-      isNikValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor NIK terdiri dari 16 angka',
-      isKkValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor KK terdiri dari 16 angka',
-      isAgeValidated: value => value >= 25 || 'Minimal usia 25 tahun',
-      isFileValidated: value => !value || value.size < 2000000 || 'Maksimal ukuran file 2 MB dan format file wajib png, jpeg, jpg, atau bmp',
-      addressValidation: value => value.length <= 255 || "Maksimal 255 Karakter"
-   },
-   name: '',
-   nik: null,
-   kartuKeluarga: null,
-   nikFile: [],
-   kkFile: [],
-   age: null,
-   genders: ["Laki-laki", "Perempuan"],
-   gender: '',
-   reasons: ['Kehilangan pekerjaan', 'Kepala keluarga terdampak atau korban Covid-19', 'Tergolong fakir/miskin semenjak sebelum Covid-19'],
-   reason: '',
-   other: '',
-   provinces: [],
-   provinceId: null,
-   province: '',
-   regencies: [],
-   regencieId: null,
-   regency: '',
-   districts: [],
-   districtId: null,
-   district: '',
-   villages: [],
-   villageId: null,
-   village: '',
-   address: '',
-   rt: null,
-   rw: null,
-   salaryBeforePandemic: null,
-   salaryAfterPandemic: null,
-   member: [],
-  }),
+  data() {
+    return {
+      rules: {
+        required: value => !!value || 'Required',
+        isNikValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor NIK terdiri dari 16 angka',
+        isKkValidated: value => value === null || (value.length >= 16 && value.length <= 16) || 'Nomor KK terdiri dari 16 angka',
+        isAgeValidated: value => value >= 25 || 'Minimal usia 25 tahun',
+        isFileValidated: value => !value || value.size < 2000000 || 'Maksimal ukuran file 2 MB dan format file wajib png, jpeg, jpg, atau bmp',
+        addressValidation: value => value.length <= 255 || "Maksimal 255 Karakter"
+      },
+      name: '',
+      nik: null,
+      kartuKeluarga: null,
+      nikFile: [],
+      kkFile: [],
+      age: null,
+      genders: ["Laki-laki", "Perempuan"],
+      gender: '',
+      reasons: ['Kehilangan pekerjaan', 'Kepala keluarga terdampak atau korban Covid-19', 'Tergolong fakir/miskin semenjak sebelum Covid-19'],
+      reason: '',
+      other: '',
+      provinces: [],
+      provinceId: null,
+      province: '',
+      regencies: [],
+      regencieId: null,
+      regency: '',
+      districts: [],
+      districtId: null,
+      district: '',
+      villages: [],
+      villageId: null,
+      village: '',
+      address: '',
+      rt: null,
+      rw: null,
+      salaryBeforePandemic: null,
+      salaryAfterPandemic: null,
+      member: [],
+    }
+  },
   methods: {
     handleNikFile(file) {
       if(file !== null) {
         if(file.size < 2000000 && (file.type ===  "image/png" || "image/jpeg" || "image/jpg" || "image/bmp") ) {
           this.nikFile = file
-          // console.log(this.nikFile)
         } else {
           alert('File anda harus kurang dari 2MB dan berformat png/jpeg/jpg/bmp')
         }
@@ -301,7 +302,7 @@ export default {
       if(file !== null) {
         if(file.size < 2000000 && (file.type ===  "image/png" || "image/jpeg" || "image/jpg" || "image/bmp") ) {
           this.kkFile = file
-          // console.log(this.kkFile)
+
         } else {
           alert('File anda harus kurang dari 2MB dan berformat png/jpeg/jpg/bmp')
         }
@@ -358,7 +359,7 @@ export default {
     },
     formIsValidated() {
       if(this.$refs.form.validate()) {
-        const memberInput = {
+        const memberInput = [{
           name: this.name,
           nik: parseInt(this.nik),
           kartuKeluarga: parseInt(this.kartuKeluarga),
@@ -376,7 +377,7 @@ export default {
           rt: parseInt(this.rt),
           rw: parseInt(this.rw),
           other: this.reason || this.other
-      }
+      }]
         this.member = memberInput
         alert('Data anda berhasil dikirim silahkan lihat di console, Terima Kasih')
         console.log(this.member)
