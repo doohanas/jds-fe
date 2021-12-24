@@ -390,6 +390,33 @@ export default {
         if(Math.random() < 0.8) {
           this.formIsValidated()
           this.$refs.form.reset()
+          this.name = '',
+          this.nik = null,
+          this.kartuKeluarga = null,
+          this.nikFile = [],
+          this.kkFile = [],
+          this.age = null,
+          this.genders = ["Laki-laki", "Perempuan"],
+          this.gender = '',
+          this.reasons = ['Kehilangan pekerjaan', 'Kepala keluarga terdampak atau korban Covid-19', 'Tergolong fakir/miskin semenjak sebelum Covid-19'],
+          this.reason = '',
+          this.other = '',
+          this.provinceId = null,
+          this.province = '',
+          this.regencies = [],
+          this.regencieId = null,
+          this.regency = '',
+          this.districts = [],
+          this.districtId = null,
+          this.district = '',
+          this.villages = [],
+          this.villageId = null,
+          this.village = '',
+          this.address= '',
+          this.rt= null,
+          this.rw= null,
+          this.salaryBeforePandemic= null,
+          this.salaryAfterPandemic= null
         } else {
           alert('Coba kembali')
         }
