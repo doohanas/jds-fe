@@ -359,7 +359,7 @@ export default {
     },
     formIsValidated() {
       if(this.$refs.form.validate()) {
-        const memberInput = [{
+        const memberInput = {
           name: this.name,
           nik: parseInt(this.nik),
           kartuKeluarga: parseInt(this.kartuKeluarga),
@@ -377,8 +377,8 @@ export default {
           rt: parseInt(this.rt),
           rw: parseInt(this.rw),
           other: this.reason || this.other
-      }]
-        this.member = memberInput
+      }
+        this.member.push(memberInput)
         alert('Data anda berhasil dikirim silahkan lihat di console, Terima Kasih')
         console.log(this.member)
       } else {
