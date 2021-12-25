@@ -101,12 +101,10 @@
           <v-select
             v-model="regencieId"
             @change="handleRegency(regencieId)"
-            @click="getRegency"
             :rules="[rules.required]"
             :items="regencies"
             item-text="name"
             item-value="id"
-            value="regencieId"
             label="Kab/Kota"
             prepend-inner-icon="mdi-map-marker-outline"
             outlined
@@ -116,7 +114,6 @@
           <v-select
             v-model="districtId"
             @change="handleDistrict(districtId)"
-            @click="getDistrict"
             :rules="[rules.required]"
             :items="districts"
             item-text="name"
@@ -130,7 +127,6 @@
           <v-select
             v-model="villageId"
             @change="handleVillage(villageId)"
-            @click="getVillage"
             :rules="[rules.required]"
             :items="villages"
             item-text="name"
@@ -288,6 +284,26 @@ export default {
       member: [],
     }
   },
+  watch: {
+    provinceId() {
+      this.regencieId = null,
+      this.districtId = null,
+      this.villageId = null
+      this.getProvinces()
+    },
+    regencieId() {
+      this.districtId = null,
+      this.villageId = null,
+      this.getRegency()
+    },
+    districtId() {
+      this.villageId = null
+      this.getDistrict()
+    },
+    villageId() {
+      this.getVillage()
+    }
+  },
   methods: {
     handleNikFile(file) {
       if(file !== null) {
@@ -315,6 +331,7 @@ export default {
       for(const province of this.provinces) {
         if(province.id === id) {
           this.province = province.name
+          this.getRegency()
         }
       }
     },
@@ -322,6 +339,7 @@ export default {
       for(const regency of this.regencies) {
         if(regency.id === id) {
           this.regency = regency.name
+          this.getDistrict()
         }
       }
     },
@@ -329,6 +347,7 @@ export default {
       for(const district of this.districts) {
         if(district.id === id) {
           this.district = district.name
+          this.getVillage()
         }
       }
     },
@@ -339,18 +358,35 @@ export default {
         }
       }
     },
-    getRegency() {
-      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.provinceId}.json`)
+    async getProvinces() {
+       await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+        .then(provinces => this.provinces = provinces.data)
+        .catch(error => console.log(error))
+    },
+    async getRegency() {
+      if(!this.provinceId) {
+        this.regencies = []
+        return
+      }
+      await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.provinceId}.json`)
         .then(regencies => this.regencies = regencies.data)
         .catch(() => alert('Pilih Provinsi'))
     },
-    getDistrict() {
-      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.regencieId}.json`)
+    async getDistrict() {
+      if(!this.regencieId) {
+        this.districts = []
+        return
+      }
+      await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.regencieId}.json`)
         .then(districts => this.districts = districts.data)
         .catch(() => alert('Pilih Kota'))
     },
-    getVillage() {
-      this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${this.districtId}.json`)
+    async getVillage() {
+      if(!this.districtId) {
+        this.villages = []
+        return
+      }
+      await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${this.districtId}.json`)
         .then(villages => this.villages = villages.data)
         .catch(() => alert('Pilih Kecamatan'))
     },
@@ -424,9 +460,7 @@ export default {
     },
   },
   created() { 
-    this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
-      .then(provinces => this.provinces = provinces.data)
-      .catch(error => console.log(error))
+    this.getProvinces();
   }
 };
 </script>
