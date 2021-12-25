@@ -131,7 +131,6 @@
             :items="villages"
             item-text="name"
             item-value="id"
-            value="villageId"
             label="Kelurahan/Desa"
             prepend-inner-icon="mdi-map-marker-outline"
             outlined
@@ -370,7 +369,7 @@ export default {
       }
       await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.provinceId}.json`)
         .then(regencies => this.regencies = regencies.data)
-        .catch(() => alert('Pilih Provinsi'))
+        .catch(error => console.log(error))
     },
     async getDistrict() {
       if(!this.regencieId) {
@@ -379,7 +378,7 @@ export default {
       }
       await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.regencieId}.json`)
         .then(districts => this.districts = districts.data)
-        .catch(() => alert('Pilih Kota'))
+        .catch(error => console.log(error))
     },
     async getVillage() {
       if(!this.districtId) {
@@ -388,7 +387,7 @@ export default {
       }
       await this.axios.get(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${this.districtId}.json`)
         .then(villages => this.villages = villages.data)
-        .catch(() => alert('Pilih Kecamatan'))
+        .catch(error => console.log(error))
     },
     handleReason(reason) {
       this.reason = reason
